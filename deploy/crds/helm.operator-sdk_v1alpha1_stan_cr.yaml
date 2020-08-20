@@ -1,0 +1,65 @@
+apiVersion: helm.operator-sdk/v1alpha1
+kind: Stan
+metadata:
+  name: example-stan
+spec:
+  # Default values copied from <project_dir>/helm-charts/stan/values.yaml
+  
+  affinity: {}
+  exporter:
+    enabled: true
+    image: synadia/prometheus-nats-exporter:0.6.2
+    pullPolicy: IfNotPresent
+  imagePullSecrets: []
+  nameOverride: ""
+  podAnnotations: {}
+  securityContext: null
+  stan:
+    clusterID: null
+    image: nats-streaming:0.18.0
+    logging:
+      debug: null
+      trace: null
+    nats:
+      serviceRoleAuth:
+        enabled: false
+        natsClusterName: null
+      url: null
+    pullPolicy: IfNotPresent
+    replicas: 1
+    tls:
+      enabled: false
+      secretName: null
+      settings:
+        client_ca: /etc/nats/certs/ca.crt
+        client_cert: /etc/nats/certs/tls.crt
+        client_key: /etc/nats/certs/tls.key
+        timeout: 3
+  store:
+    cluster:
+      enabled: false
+      logPath: /data/stan/log
+    file:
+      path: /data/stan/store
+    ft:
+      group: null
+    limits: {}
+    sql:
+      dbHost: ""
+      dbName: postgres
+      dbPassword: stan
+      dbPort: 5432
+      dbUser: postgres
+      driver: postgres
+      initdb:
+        enabled: false
+        image: postgres:11
+      source: ""
+    type: file
+    volume:
+      accessModes: ReadWriteOnce
+      enabled: true
+      mount: /data/stan
+      storageClass: null
+      storageSize: 1Gi
+  
