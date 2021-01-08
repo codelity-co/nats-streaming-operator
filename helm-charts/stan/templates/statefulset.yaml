@@ -34,7 +34,11 @@ spec:
         chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     spec:
       {{- if .Values.stan.nats.serviceRoleAuth.enabled }}
+      {{- if .Values.stan.nats.serviceAccount}}
+      serviceAccountName: {{ .Values.stan.nats.serviceAccount }}
+      {{- else }}
       serviceAccountName: "nats-streaming"
+      {{- end }}
       {{- end }}
 {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
